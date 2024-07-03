@@ -1,0 +1,226 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: 'UserPool, APIGatway + Lambdas'
+
+Parameters:
+  ProjectPrefix:
+    Type: String
+    Default: 'demo'
+    Description: 'Name of Project prefix'
+  ProjectName:
+    Type: String
+    Description: 'Name of Project'
+  ProjectRepo:
+    Type: 'String'
+    Description: 'Repo Path i.e GitHubUser/RepoName'
+  SubDomainName:
+    Type: 'String'
+    Description: 'Subdomain path'
+  HostedZoneId:
+    Type: 'String'
+    Description: 'Domain hosted id'
+
+Resources:
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      AutoVerifiedAttributes:
+        - email
+      UsernameAttributes:
+        - email
+      UserPoolName: !Sub '${ProjectPrefix}-cognito-api-${ProjectName}'
+      VerificationMessageTemplate:
+        DefaultEmailOption: CONFIRM_WITH_LINK
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: !Sub '${ProjectPrefix}-cognito-api-${ProjectName}'
+      ExplicitAuthFlows:
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_SRP_AUTH
+      UserPoolId: !Ref UserPool
+
+  Api:
+    Type: 'AWS::ApiGatewayV2::Api'
+    Properties:
+      Name: !Sub '${ProjectPrefix}-api-${ProjectName}'
+      ProtocolType: 'HTTP'
+      CorsConfiguration:
+        AllowOrigins:
+          - '*'
+        AllowMethods:
+          - POST
+        AllowHeaders:
+          - 'authorization'
+          - 'content-type'
+
+  ApiCertificate:
+    Type: 'AWS::CertificateManager::Certificate'
+    Properties:
+      DomainName: !Ref SubDomainName
+      DomainValidationOptions:
+        - DomainName: !Ref SubDomainName
+          HostedZoneId: !Ref HostedZoneId
+      ValidationMethod: DNS
+
+  ApiDomain:
+    Type: 'AWS::ApiGatewayV2::DomainName'
+    Properties:
+      DomainName: !Ref SubDomainName
+      DomainNameConfigurations:
+        - EndpointType: 'REGIONAL'
+          CertificateArn: !Ref ApiCertificate
+
+  ApiMapping:
+    Type: 'AWS::ApiGatewayV2::ApiMapping'
+    Properties:
+      ApiId: !Ref Api
+      DomainName: !Ref SubDomainName
+      Stage: !Ref ApiStage
+    DependsOn:
+      - ApiDomain
+
+  RecordSet:
+    Type: 'AWS::Route53::RecordSet'
+    Properties:
+      HostedZoneId: !Ref HostedZoneId
+      Name: !Ref SubDomainName
+      Type: 'A'
+      AliasTarget:
+        DNSName: !GetAtt ApiDomain.RegionalDomainName
+        HostedZoneId: !GetAtt ApiDomain.RegionalHostedZoneId
+    DependsOn:
+      - Api
+
+  APIRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-api'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'apigateway.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+
+  ApiIntegration:
+    Type: 'AWS::ApiGatewayV2::Integration'
+    Properties:
+      ApiId: !Ref Api
+      IntegrationType: AWS_PROXY
+      IntegrationSubtype: 'SQS-SendMessage'
+      CredentialsArn: !GetAtt APIRole.Arn
+      PayloadFormatVersion: '1.0'
+      RequestParameters:
+        QueueUrl: !Ref SQSQueue
+        MessageBody: $request.body
+
+  ApiAuthorizer:
+    Type: AWS::ApiGatewayV2::Authorizer
+    Properties:
+      ApiId: !Ref Api
+      AuthorizerType: JWT
+      IdentitySource:
+        - '$request.header.Authorization'
+      JwtConfiguration:
+        Audience:
+          - !Ref UserPoolClient
+        Issuer: !Sub 'https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}'
+      Name: JwtAuthorizer
+
+  ApiRoute:
+    Type: 'AWS::ApiGatewayV2::Route'
+    Properties:
+      ApiId: !Ref Api
+      AuthorizationType: JWT
+      AuthorizerId: !Ref ApiAuthorizer
+      RouteKey: 'POST /'
+      Target: !Sub 'integrations/${ApiIntegration}'
+    DependsOn:
+      - ApiIntegration
+
+  ApiStage:
+    Type: 'AWS::ApiGatewayV2::Stage'
+    Properties:
+      ApiId: !Ref Api
+      AutoDeploy: true
+      StageName: 'dev'
+
+  LambdaProcessorLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub '/aws/lambda/${ProjectPrefix}-lambda-processor-${ProjectName}'
+      RetentionInDays: 14
+
+  LambdaProcessor:
+    Type: 'AWS::Lambda::Function'
+    Properties:
+      Description: !Sub '${ProjectPrefix}-lambda-processor-${ProjectName}'
+      FunctionName: !Sub '${ProjectPrefix}-lambda-processor-${ProjectName}'
+      Code:
+        ZipFile: |
+          exports.handler = function(event, context) {
+            const response = {
+              statusCode: 200,
+              body: JSON.stringify({ 'msg': 'dummy api response' })
+            };
+            return response;
+          };
+      Runtime: nodejs20.x
+      Timeout: 60
+      MemorySize: 256
+      Handler: index.handler
+      Role: !GetAtt LambdaProcessorRole.Arn
+
+  LambdaProcessorRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-lambda-processor'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'lambda.amazonaws.com'
+            Action:
+              - 'sts:AssumeRole'
+      Policies:
+        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-lambda-processor-logs'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action: logs:*
+                Resource: !GetAtt LambdaProcessorLogGroup.Arn
+
+  GitHubActionRole:
+    Type: 'AWS::IAM::Role'
+    Properties:
+      RoleName: !Sub '${ProjectPrefix}-role-${ProjectName}-github-lambda'
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: 'Allow'
+            Principal:
+              Federated:
+                - !Sub 'arn:aws:iam::${AWS::AccountId}:oidc-provider/token.actions.githubusercontent.com'
+            Action:
+              - 'sts:AssumeRoleWithWebIdentity'
+            Condition:
+              StringEquals:
+                token.actions.githubusercontent.com:aud: 'sts.amazonaws.com'
+              StringLike:
+                token.actions.githubusercontent.com:sub: !Sub 'repo:${ProjectRepo}:*'
+      Policies:
+        - PolicyName: !Sub '${ProjectPrefix}-policy-${ProjectName}-github-lambda'
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: 'Allow'
+                Action: 'lambda:UpdateFunctionCode'
+                Resource:
+                  - !GetAtt LambdaProcessor.Arn
