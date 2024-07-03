@@ -26,5 +26,4 @@ pip install diagrams
 ```bash
 python backend_diagram.py
 python frontend_diagram.py
-python vpc_diagram.py
 ```
