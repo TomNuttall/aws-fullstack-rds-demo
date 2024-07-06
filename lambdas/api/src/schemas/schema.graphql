@@ -1,0 +1,13 @@
+type Card {
+  id: Int
+  value: Int
+}
+
+type Query {
+  getCards: [Card]
+  getCard(cardId: Int!): Card
+}
+
+type Mutation {
+  updateCard(cardId: Int!, value: Int!): [Card]
+}
