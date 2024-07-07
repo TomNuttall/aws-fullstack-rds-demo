@@ -1,7 +1,11 @@
 import React from 'react'
-//import { useQuery } from '@apollo/client'
+import { useQuery } from '@apollo/client'
+import { GET_CARDS } from '../../graphql/queries'
 
 const Home = () => {
+  const { data } = useQuery(GET_CARDS)
+  console.log(data)
+
   return (
     <div
       data-testid="home"
