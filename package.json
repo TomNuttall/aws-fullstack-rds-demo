@@ -1,0 +1,10 @@
+{
+  "name": "demo_rds",
+  "version": "1.0.0",
+  "author": "Tom Nuttall <tsnuttall@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "db:start": "docker compose up -d",
+    "db:stop": "docker compose down"
+  }
+}
