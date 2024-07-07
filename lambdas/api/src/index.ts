@@ -1,4 +1,5 @@
 import { apolloServer } from './server'
+import { createContext } from './context'
 import {
   StandaloneServerContextFunctionArgument,
   startStandaloneServer,
@@ -7,21 +8,6 @@ import {
   startServerAndCreateLambdaHandler,
   handlers,
 } from '@as-integrations/aws-lambda'
-
-import { Context } from './types/types'
-
-// {event}
-const context = async (): Promise<Context> => {
-  // req.
-  return {
-    testData: {
-      cards: [
-        { id: 0, value: 5 },
-        { id: 1, value: 10 },
-      ],
-    },
-  }
-}
 
 // export const handler = startServerAndCreateLambdaHandler(
 //   apolloServer,
@@ -32,7 +18,7 @@ const context = async (): Promise<Context> => {
 
 const main = async () => {
   const { url } = await startStandaloneServer(apolloServer, {
-    context,
+    context: createContext,
     listen: { port: 4000 },
   })
   console.log(`🚀  Server ready at ${url}`)
