@@ -1,4 +1,3 @@
-// index.js
 import { ApolloServer } from '@apollo/server'
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default'
 import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled'

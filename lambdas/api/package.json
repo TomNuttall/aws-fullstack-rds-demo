@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "generate": "graphql-codegen --config codegen.ts",
-    "compile": "npm run generate && tsc",
+    "compile": "yarn generate && tsc",
     "dev": "nodemon src/index.ts -p tsconfig.json",
     "build": "yarn tsc -p tsconfig.json",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
