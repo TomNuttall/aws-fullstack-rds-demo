@@ -13,9 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  mutation UpdateCard($cardId: Int!, $value: Int!) {\n    updateCard(cardId: $cardId, value: $value) {\n      id\n      value\n    }\n  }\n": types.UpdateCardDocument,
-    "\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.GetCardDocument,
+    "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.FavouriteCardDocument,
+    "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.UnfavouriteCardDocument,
     "\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n": types.GetCardsDocument,
+    "\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n": types.GetMyCardsDocument,
 };
 
 /**
@@ -35,15 +36,19 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation UpdateCard($cardId: Int!, $value: Int!) {\n    updateCard(cardId: $cardId, value: $value) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  mutation UpdateCard($cardId: Int!, $value: Int!) {\n    updateCard(cardId: $cardId, value: $value) {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

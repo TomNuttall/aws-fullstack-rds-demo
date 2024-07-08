@@ -1,12 +1,21 @@
 import { gql } from '../__generated__/gql'
 
-const UPDATE_CARD = gql(`
-  mutation UpdateCard($cardId: Int!, $value: Int!) {
-    updateCard(cardId: $cardId, value: $value) {
+const FAVOURITE_CARD = gql(`
+  mutation FavouriteCard($cardId: Int!) {
+    favouriteCard(cardId: $cardId) {
       id
       value
     }
   }
 `)
 
-export { UPDATE_CARD }
+const UNFAVOURITE_CARD = gql(`
+  mutation UnfavouriteCard($cardId: Int!) {
+    unfavouriteCard(cardId: $cardId) {
+      id
+      value
+    }
+  }
+`)
+
+export { FAVOURITE_CARD, UNFAVOURITE_CARD }

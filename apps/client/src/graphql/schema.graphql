@@ -5,9 +5,10 @@ type Card {
 
 type Query {
   getCards: [Card]
-  getCard(cardId: Int!): Card
+  getMyCards: [Card]
 }
 
 type Mutation {
-  updateCard(cardId: Int!, value: Int!): [Card]
+  favouriteCard(cardId: Int!): [Card]
+  unfavouriteCard(cardId: Int!): [Card]
 }

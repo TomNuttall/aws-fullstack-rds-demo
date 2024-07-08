@@ -25,24 +25,24 @@ export type Card = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  updateCard?: Maybe<Array<Maybe<Card>>>;
+  favouriteCard?: Maybe<Array<Maybe<Card>>>;
+  unfavouriteCard?: Maybe<Array<Maybe<Card>>>;
 };
 
 
-export type MutationUpdateCardArgs = {
+export type MutationFavouriteCardArgs = {
   cardId: Scalars['Int']['input'];
-  value: Scalars['Int']['input'];
+};
+
+
+export type MutationUnfavouriteCardArgs = {
+  cardId: Scalars['Int']['input'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  getCard?: Maybe<Card>;
   getCards?: Maybe<Array<Maybe<Card>>>;
-};
-
-
-export type QueryGetCardArgs = {
-  cardId: Scalars['Int']['input'];
+  getMyCards?: Maybe<Array<Maybe<Card>>>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -142,12 +142,13 @@ export type CardResolvers<ContextType = Context, ParentType extends ResolversPar
 }>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  updateCard?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType, RequireFields<MutationUpdateCardArgs, 'cardId' | 'value'>>;
+  favouriteCard?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType, RequireFields<MutationFavouriteCardArgs, 'cardId'>>;
+  unfavouriteCard?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType, RequireFields<MutationUnfavouriteCardArgs, 'cardId'>>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getCard?: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<QueryGetCardArgs, 'cardId'>>;
   getCards?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType>;
+  getMyCards?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{

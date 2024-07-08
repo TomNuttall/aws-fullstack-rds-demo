@@ -9,14 +9,13 @@ const queries: QueryResolvers = {
     return cards
   },
 
-  getCard: async (parent, args, context, info) => {
-    const { cardId } = args
+  getMyCards: async (parent, args, context, info) => {
     const {
       testData: { cards },
     } = context
 
-    const match = cards.find((card: any) => card.id === cardId)
-    return match ?? null
+    // logged in user from context
+    return cards
   },
 }
 

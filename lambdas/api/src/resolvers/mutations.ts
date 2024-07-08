@@ -1,10 +1,19 @@
 import { Card, MutationResolvers } from '../__generated__/resolvers-types'
 
 const mutations: MutationResolvers = {
-  updateCard: async (parent, args, context, info) => {
-    const { cardId, value } = args
+  favouriteCard: async (parent, args, context, info) => {
+    const { cardId } = args
+    // logged in user from contexr
 
-    const card: Card = { id: cardId, value }
+    const card: Card = { id: cardId, value: 5 }
+    return [card]
+  },
+
+  unfavouriteCard: async (parent, args, context, info) => {
+    const { cardId } = args
+    // logged in user from contexr
+
+    const card: Card = { id: cardId, value: 5 }
     return [card]
   },
 }

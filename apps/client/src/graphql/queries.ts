@@ -1,14 +1,5 @@
 import { gql } from '../__generated__/gql'
 
-const GET_CARD = gql(`
-  query GetCard($cardId: Int!) {
-    getCard(cardId: $cardId) {
-      id
-      value
-    }
-  }
-`)
-
 const GET_CARDS = gql(`
   query GetCards {
     getCards {
@@ -18,4 +9,13 @@ const GET_CARDS = gql(`
   }
 `)
 
-export { GET_CARD, GET_CARDS }
+const GET_MY_CARDS = gql(`
+  query GetMyCards {
+    getMyCards {
+      id
+      value
+    }
+  }
+`)
+
+export { GET_CARDS, GET_MY_CARDS }

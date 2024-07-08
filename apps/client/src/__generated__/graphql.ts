@@ -24,47 +24,52 @@ export type Card = {
 
 export type Mutation = {
   __typename?: 'Mutation';
-  updateCard?: Maybe<Array<Maybe<Card>>>;
+  favouriteCard?: Maybe<Array<Maybe<Card>>>;
+  unfavouriteCard?: Maybe<Array<Maybe<Card>>>;
 };
 
 
-export type MutationUpdateCardArgs = {
+export type MutationFavouriteCardArgs = {
   cardId: Scalars['Int']['input'];
-  value: Scalars['Int']['input'];
+};
+
+
+export type MutationUnfavouriteCardArgs = {
+  cardId: Scalars['Int']['input'];
 };
 
 export type Query = {
   __typename?: 'Query';
-  getCard?: Maybe<Card>;
   getCards?: Maybe<Array<Maybe<Card>>>;
+  getMyCards?: Maybe<Array<Maybe<Card>>>;
 };
 
-
-export type QueryGetCardArgs = {
-  cardId: Scalars['Int']['input'];
-};
-
-export type UpdateCardMutationVariables = Exact<{
-  cardId: Scalars['Int']['input'];
-  value: Scalars['Int']['input'];
-}>;
-
-
-export type UpdateCardMutation = { __typename?: 'Mutation', updateCard?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
-
-export type GetCardQueryVariables = Exact<{
+export type FavouriteCardMutationVariables = Exact<{
   cardId: Scalars['Int']['input'];
 }>;
 
 
-export type GetCardQuery = { __typename?: 'Query', getCard?: { __typename?: 'Card', id?: number | null, value?: number | null } | null };
+export type FavouriteCardMutation = { __typename?: 'Mutation', favouriteCard?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
+
+export type UnfavouriteCardMutationVariables = Exact<{
+  cardId: Scalars['Int']['input'];
+}>;
+
+
+export type UnfavouriteCardMutation = { __typename?: 'Mutation', unfavouriteCard?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
 
 export type GetCardsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetCardsQuery = { __typename?: 'Query', getCards?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
 
+export type GetMyCardsQueryVariables = Exact<{ [key: string]: never; }>;
 
-export const UpdateCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UpdateCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"value"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"updateCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}},{"kind":"Argument","name":{"kind":"Name","value":"value"},"value":{"kind":"Variable","name":{"kind":"Name","value":"value"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UpdateCardMutation, UpdateCardMutationVariables>;
-export const GetCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetCardQuery, GetCardQueryVariables>;
+
+export type GetMyCardsQuery = { __typename?: 'Query', getMyCards?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
+
+
+export const FavouriteCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FavouriteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favouriteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<FavouriteCardMutation, FavouriteCardMutationVariables>;
+export const UnfavouriteCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnfavouriteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unfavouriteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UnfavouriteCardMutation, UnfavouriteCardMutationVariables>;
 export const GetCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetCardsQuery, GetCardsQueryVariables>;
+export const GetMyCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMyCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetMyCardsQuery, GetMyCardsQueryVariables>;
