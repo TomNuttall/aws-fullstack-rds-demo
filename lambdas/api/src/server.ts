@@ -3,7 +3,7 @@ import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin
 import { ApolloServerPluginLandingPageDisabled } from '@apollo/server/plugin/disabled'
 
 import resolvers from './resolvers'
-import { Context } from './types/types'
+import { Context } from './context/context'
 
 import { readFileSync } from 'fs'
 import { join } from 'path'
