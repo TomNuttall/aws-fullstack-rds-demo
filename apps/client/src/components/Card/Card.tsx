@@ -7,11 +7,9 @@ interface CardProps {
 
 const Card: React.FC<CardProps> = ({ data }) => {
   return (
-    <div
-      data-testid="card"
-      className="h-14 bg-gradient-to-r from-cyan-500 to-blue-500"
-    >
-      <h2>{data?.value}</h2>
+    <div data-testid="card" className="flex flex-row">
+      <p className="text-main">{data?.id}</p>
+      <p className="text-main">{data?.value}</p>
     </div>
   )
 }

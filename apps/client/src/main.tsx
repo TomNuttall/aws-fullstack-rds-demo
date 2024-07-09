@@ -1,25 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-// import { GoogleOAuthProvider } from '@react-oauth/google'
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { ClerkProvider } from '@clerk/clerk-react'
+import ApolloProviderWrapper from './providers/ApolloProviderWrapper'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.tsx'
 import './index.css'
 
-// https://www.apollographql.com/docs/react/networking/authentication/
-const client = new ApolloClient({
-  uri: 'http://localhost:4000',
-  cache: new InMemoryCache(),
-})
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    {/* <GoogleOAuthProvider clientId="<your_client_id>">
-    </GoogleOAuthProvider> */}
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ApolloProvider>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <ApolloProviderWrapper>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </ApolloProviderWrapper>
+    </ClerkProvider>
   </React.StrictMode>,
 )
