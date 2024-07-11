@@ -1,13 +1,21 @@
-import { startStandaloneServer } from '@apollo/server/standalone'
-import { apolloServer } from './server'
+import { apolloServer, app, httpServer } from './server'
+import { expressMiddleware } from '@apollo/server/express4'
+import cors from 'cors'
+import express from 'express'
 import { createContext } from './context/context'
 
 const main = async () => {
-  const { url } = await startStandaloneServer(apolloServer, {
-    context: createContext,
-    listen: { port: 3000 },
-  })
-  console.log(`🚀  Server ready at ${url}`)
-}
+  await apolloServer.start()
 
+  app.use(
+    '/graphql',
+    cors<cors.CorsRequest>(),
+    express.json(),
+    expressMiddleware(apolloServer, { context: createContext }),
+  )
+  await new Promise<void>((resolve) =>
+    httpServer.listen({ port: 3000 }, resolve),
+  )
+  console.log(`🚀 Server ready at http://localhost:3000/graphql`)
+}
 main()

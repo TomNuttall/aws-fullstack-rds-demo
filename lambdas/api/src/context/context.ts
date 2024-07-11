@@ -7,24 +7,27 @@ export interface TestData {
 
 export interface Context {
   testData: TestData
-  userId: string
+  userId: string | undefined
 }
 
 const clerkClient = createClerkClient({
   secretKey: process.env.CLERK_SECRET_KEY,
+  publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
 })
 
 //@ts-ignore
 export const createContext = async ({ req }): Promise<Context> => {
+  let userId: string | undefined = undefined
   try {
-    console.log('HEADERS', req.headers)
-    const userId = await clerkClient.authenticateRequest(req)
-    console.log('USER ID', userId)
-    // const user = userId ? await clerkClient.users.getUser(userId) : null
-    // console.log('USER', user)
-  } catch (e) {
-    console.log(e)
-  }
+    req.url = process.env.APP_URL ?? req.url
+    const { isSignedIn, toAuth } = await clerkClient.authenticateRequest(req)
+    if (isSignedIn) {
+      const user = toAuth()
+      userId = user.userId
+    }
+  } catch (e) {}
+
+  console.log(`REQUEST - user: ${userId} operation: ${req.body.operationName}`)
 
   return {
     testData: {
@@ -33,6 +36,6 @@ export const createContext = async ({ req }): Promise<Context> => {
         { id: 1, value: 10 },
       ],
     },
-    userId: '1',
+    userId,
   }
 }

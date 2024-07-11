@@ -10,7 +10,7 @@ import { setContext } from '@apollo/client/link/context'
 import { useAuth } from '@clerk/clerk-react'
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:3000/',
+  uri: 'http://localhost:3000/graphql/',
 })
 
 interface ApolloProviderProps {
@@ -18,7 +18,7 @@ interface ApolloProviderProps {
 }
 
 const ApolloProviderWrapper: React.FC<ApolloProviderProps> = ({ children }) => {
-  const { getToken, sessionId, userId } = useAuth()
+  const { getToken } = useAuth()
 
   const client = useMemo(() => {
     const authMiddleware = setContext(async (_, { headers }) => {
