@@ -15,8 +15,8 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
 const documents = {
     "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.FavouriteCardDocument,
     "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.UnfavouriteCardDocument,
-    "\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n": types.GetCardsDocument,
-    "\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n": types.GetMyCardsDocument,
+    "\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n": types.GetAllCardsDocument,
+    "\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n": types.GetMyCardsDocument,
 };
 
 /**
@@ -44,11 +44,11 @@ export function gql(source: "\n  mutation UnfavouriteCard($cardId: Int!) {\n    
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  query GetCards {\n    getCards {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"): (typeof documents)["\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  query GetMyCards {\n    getMyCards {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"): (typeof documents)["\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

@@ -3,12 +3,17 @@ type Card {
   value: Int
 }
 
+type PaginatedCard {
+  paginatedData: [Card]
+  paginatedTotal: Int
+}
+
 type Query {
-  getCards: [Card]
-  getMyCards: [Card]
+  getAllCards(pageNo: Int!, perPage: Int!): PaginatedCard
+  getMyCards(pageNo: Int!, perPage: Int!): PaginatedCard
 }
 
 type Mutation {
-  favouriteCard(cardId: Int!): [Card]
-  unfavouriteCard(cardId: Int!): [Card]
+  favouriteCard(cardId: Int!): Card
+  unfavouriteCard(cardId: Int!): Card
 }

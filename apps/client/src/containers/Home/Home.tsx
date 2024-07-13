@@ -1,10 +1,15 @@
-import React from 'react'
-import { useLazyQuery } from '@apollo/client'
-import { GET_CARDS } from '../../graphql/queries'
-import Card from '../../components/Card'
+import React, { useState } from 'react'
+import { useQuery } from '@apollo/client'
+import { GET_ALL_CARDS } from '../../graphql/queries'
+import CardList from '../../components/CardList'
 
 const Home: React.FC = () => {
-  const [getCards, { data }] = useLazyQuery(GET_CARDS)
+  const [pageNo, setPageNo] = useState<number>(1)
+  const [perPage, setPerPage] = useState<number>(10)
+
+  const { data, fetchMore } = useQuery(GET_ALL_CARDS, {
+    variables: { pageNo, perPage },
+  })
 
   return (
     <div className="p-6" data-testid="home">
@@ -12,20 +17,16 @@ const Home: React.FC = () => {
       <button
         className="btn btn-blue"
         onClick={() => {
-          console.log('click')
-          getCards({ fetchPolicy: 'no-cache' })
+          fetchMore({
+            variables: { pageNo, perPage },
+          })
         }}
       >
         Get Query
       </button>
-      <p className="mt-4 mb-6 text-main">Data</p>
-      <ul>
-        {data?.getCards?.map((cardData) => (
-          <li key={cardData?.id}>
-            <Card data={cardData} />
-          </li>
-        ))}
-      </ul>
+      {data?.getAllCards && (
+        <CardList cardsData={data.getAllCards.paginatedData} />
+      )}
     </div>
   )
 }
