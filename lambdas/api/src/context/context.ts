@@ -8,6 +8,7 @@ export interface TestData {
 export interface Context {
   testData: TestData
   userId: string | undefined
+  isLoggedIn: boolean
 }
 
 const clerkClient = createClerkClient({
@@ -18,12 +19,15 @@ const clerkClient = createClerkClient({
 //@ts-ignore
 export const createContext = async ({ req }): Promise<Context> => {
   let userId: string | undefined = undefined
+  let isLoggedIn = false
   try {
     req.url = process.env.APP_URL ?? req.url
     const { isSignedIn, toAuth } = await clerkClient.authenticateRequest(req)
+
     if (isSignedIn) {
       const user = toAuth()
       userId = user.userId
+      isLoggedIn = true
     }
   } catch (e) {}
 
@@ -37,5 +41,6 @@ export const createContext = async ({ req }): Promise<Context> => {
       ],
     },
     userId,
+    isLoggedIn,
   }
 }
