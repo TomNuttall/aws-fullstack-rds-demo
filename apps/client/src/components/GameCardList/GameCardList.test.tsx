@@ -2,17 +2,17 @@ import React from 'react'
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { Card as CardType } from '../../__generated__/graphql'
-import Card from './Card'
+import GameCardList from './GameCardList'
 
-describe('Card', () => {
+describe('GameCardList', () => {
   it('renders component', async () => {
     // Arrange
-    const cardData: CardType = { id: 1, value: 5 }
+    const cardData: CardType[] = [{ id: 1, value: 5 }]
 
     // Act
-    render(<Card data={cardData} />)
+    render(<GameCardList cardsData={cardData} />)
 
     // Assert
-    expect(await screen.findByText(cardData.value ?? '')).toBeInTheDocument()
+    expect(await screen.findAllByRole('listitem')).toHaveLength(1)
   })
 })

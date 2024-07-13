@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
 import { GET_ALL_CARDS } from '../../graphql/queries'
 import { GetAllCardsQuery } from '../../__generated__/graphql'
+import { PER_PAGE } from './Home'
 import Home from './Home'
 
 describe('Home', () => {
@@ -12,7 +13,7 @@ describe('Home', () => {
     const getCardsMock: MockedResponse<GetAllCardsQuery> = {
       request: {
         query: GET_ALL_CARDS,
-        variables: { pageNo: 1, perPage: 10 },
+        variables: { pageNo: 1, perPage: PER_PAGE },
       },
       result: {
         data: {

@@ -33,7 +33,13 @@ const ApolloProviderWrapper: React.FC<ApolloProviderProps> = ({ children }) => {
 
     return new ApolloClient({
       link: from([authMiddleware, httpLink]),
-      cache: new InMemoryCache(),
+      cache: new InMemoryCache({
+        typePolicies: {
+          Card: {
+            merge: true,
+          },
+        },
+      }),
     })
   }, [])
 
