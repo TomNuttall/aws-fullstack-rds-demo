@@ -5,7 +5,7 @@ const permissions = shield(
   {
     Query: {
       '*': deny,
-      getCards: allow,
+      getAllCards: allow,
       getMyCards: isAuthenticated,
     },
     Mutation: {

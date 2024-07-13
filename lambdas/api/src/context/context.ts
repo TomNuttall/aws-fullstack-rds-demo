@@ -1,5 +1,6 @@
 import { Card } from '../__generated__/resolvers-types'
 import { createClerkClient } from '@clerk/backend'
+import { mockedTestData } from '../../tests/mocks/mocks'
 
 export interface TestData {
   cards: Card[]
@@ -34,12 +35,7 @@ export const createContext = async ({ req }): Promise<Context> => {
   console.log(`REQUEST - user: ${userId} operation: ${req.body.operationName}`)
 
   return {
-    testData: {
-      cards: [
-        { id: 0, value: 5 },
-        { id: 1, value: 10 },
-      ],
-    },
+    testData: mockedTestData,
     userId,
     isLoggedIn,
   }

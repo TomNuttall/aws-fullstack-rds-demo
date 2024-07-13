@@ -2,20 +2,24 @@ import React from 'react'
 import { describe, it, expect } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MockedProvider, MockedResponse } from '@apollo/client/testing'
-import { GET_CARDS } from '../../graphql/queries'
-import { GetCardsQuery } from '../../__generated__/graphql'
+import { GET_ALL_CARDS } from '../../graphql/queries'
+import { GetAllCardsQuery } from '../../__generated__/graphql'
 import Home from './Home'
 
 describe('Home', () => {
   it('renders correctly with call to api', async () => {
     // Arrange
-    const getCardsMock: MockedResponse<GetCardsQuery> = {
+    const getCardsMock: MockedResponse<GetAllCardsQuery> = {
       request: {
-        query: GET_CARDS,
+        query: GET_ALL_CARDS,
+        variables: { pageNo: 1, perPage: 10 },
       },
       result: {
         data: {
-          getCards: [{ id: 1, value: 5 }],
+          getAllCards: {
+            paginatedData: [{ id: 1, value: 5 }],
+            paginatedTotal: 1,
+          },
         },
       },
     }

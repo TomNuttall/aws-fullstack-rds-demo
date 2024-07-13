@@ -38,10 +38,28 @@ export type MutationUnfavouriteCardArgs = {
   cardId: Scalars['Int']['input'];
 };
 
+export type PaginatedCard = {
+  __typename?: 'PaginatedCard';
+  paginatedData?: Maybe<Array<Maybe<Card>>>;
+  paginatedTotal?: Maybe<Scalars['Int']['output']>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  getCards?: Maybe<Array<Maybe<Card>>>;
-  getMyCards?: Maybe<Array<Maybe<Card>>>;
+  getAllCards?: Maybe<PaginatedCard>;
+  getMyCards?: Maybe<PaginatedCard>;
+};
+
+
+export type QueryGetAllCardsArgs = {
+  pageNo: Scalars['Int']['input'];
+  perPage: Scalars['Int']['input'];
+};
+
+
+export type QueryGetMyCardsArgs = {
+  pageNo: Scalars['Int']['input'];
+  perPage: Scalars['Int']['input'];
 };
 
 export type FavouriteCardMutationVariables = Exact<{
@@ -58,18 +76,24 @@ export type UnfavouriteCardMutationVariables = Exact<{
 
 export type UnfavouriteCardMutation = { __typename?: 'Mutation', unfavouriteCard?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
 
-export type GetCardsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetAllCardsQueryVariables = Exact<{
+  pageNo: Scalars['Int']['input'];
+  perPage: Scalars['Int']['input'];
+}>;
 
 
-export type GetCardsQuery = { __typename?: 'Query', getCards?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
+export type GetAllCardsQuery = { __typename?: 'Query', getAllCards?: { __typename?: 'PaginatedCard', paginatedTotal?: number | null, paginatedData?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null } | null };
 
-export type GetMyCardsQueryVariables = Exact<{ [key: string]: never; }>;
+export type GetMyCardsQueryVariables = Exact<{
+  pageNo: Scalars['Int']['input'];
+  perPage: Scalars['Int']['input'];
+}>;
 
 
-export type GetMyCardsQuery = { __typename?: 'Query', getMyCards?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null };
+export type GetMyCardsQuery = { __typename?: 'Query', getMyCards?: { __typename?: 'PaginatedCard', paginatedTotal?: number | null, paginatedData?: Array<{ __typename?: 'Card', id?: number | null, value?: number | null } | null> | null } | null };
 
 
 export const FavouriteCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"FavouriteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"favouriteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<FavouriteCardMutation, FavouriteCardMutationVariables>;
 export const UnfavouriteCardDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"mutation","name":{"kind":"Name","value":"UnfavouriteCard"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"unfavouriteCard"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"cardId"},"value":{"kind":"Variable","name":{"kind":"Name","value":"cardId"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<UnfavouriteCardMutation, UnfavouriteCardMutationVariables>;
-export const GetCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetCardsQuery, GetCardsQueryVariables>;
-export const GetMyCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMyCards"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}}]}}]} as unknown as DocumentNode<GetMyCardsQuery, GetMyCardsQueryVariables>;
+export const GetAllCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetAllCards"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"perPage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getAllCards"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNo"}}},{"kind":"Argument","name":{"kind":"Name","value":"perPage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"perPage"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatedData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paginatedTotal"}}]}}]}}]} as unknown as DocumentNode<GetAllCardsQuery, GetAllCardsQueryVariables>;
+export const GetMyCardsDocument = {"kind":"Document","definitions":[{"kind":"OperationDefinition","operation":"query","name":{"kind":"Name","value":"GetMyCards"},"variableDefinitions":[{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"pageNo"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}},{"kind":"VariableDefinition","variable":{"kind":"Variable","name":{"kind":"Name","value":"perPage"}},"type":{"kind":"NonNullType","type":{"kind":"NamedType","name":{"kind":"Name","value":"Int"}}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"getMyCards"},"arguments":[{"kind":"Argument","name":{"kind":"Name","value":"pageNo"},"value":{"kind":"Variable","name":{"kind":"Name","value":"pageNo"}}},{"kind":"Argument","name":{"kind":"Name","value":"perPage"},"value":{"kind":"Variable","name":{"kind":"Name","value":"perPage"}}}],"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"paginatedData"},"selectionSet":{"kind":"SelectionSet","selections":[{"kind":"Field","name":{"kind":"Name","value":"id"}},{"kind":"Field","name":{"kind":"Name","value":"value"}}]}},{"kind":"Field","name":{"kind":"Name","value":"paginatedTotal"}}]}}]}}]} as unknown as DocumentNode<GetMyCardsQuery, GetMyCardsQueryVariables>;
