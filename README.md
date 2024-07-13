@@ -1,4 +1,4 @@
-# aws-rds-demo
+# aws-fullstack-demo
 
 Demo Project to explore setting up RDS.
 
