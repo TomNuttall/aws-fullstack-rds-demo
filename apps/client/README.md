@@ -4,9 +4,11 @@ Frontend created with Vite, React + TypeScript.
 
 ## Overview
 
-- [Apollo Client](https://www.apollographql.com/docs/react/) used for GraphQL client
+- [Apollo Client](https://www.apollographql.com/docs/react/) used for GraphQL client.
+- [Clerk](https://clerk.com/docs/quickstarts/react) used for SSO.
 - [Tailwindcss](https://tailwindcss.com/docs/installation) used for styling
-- [Clerk](https://clerk.com/docs/quickstarts/react) used for SSO
+- [Radix UI](https://www.radix-ui.com/icons) used for icons.
+- [Shadcn UI](https://ui.shadcn.com/docs/) used for components.
 
 ## Run
 
