@@ -1,7 +1,6 @@
 import {
   PaginationNav,
   PaginationContent,
-  PaginationEllipsis,
   PaginationItem,
   PaginationLink,
   PaginationNext,
@@ -43,7 +42,7 @@ const Pagination: React.FC<PaginationProps> = ({
     <PaginationNav className="mt-12">
       <PaginationContent>
         {pageNo > 1 && (
-          <PaginationItem>
+          <PaginationItem key="pagination-prev">
             <PaginationPrevious
               href="#"
               onClick={() => setPageNo(pageNo - 1)}
@@ -51,7 +50,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </PaginationItem>
         )}
         {activePages.map((pageIdx) => (
-          <PaginationItem>
+          <PaginationItem key={`pagination-page-${pageIdx}`}>
             <PaginationLink
               href="#"
               isActive={pageNo === pageIdx}
@@ -63,7 +62,7 @@ const Pagination: React.FC<PaginationProps> = ({
           </PaginationItem>
         ))}
         {pageNo < totalPages && (
-          <PaginationItem>
+          <PaginationItem key="pagination-next">
             <PaginationNext href="#" onClick={() => setPageNo(pageNo + 1)} />
           </PaginationItem>
         )}

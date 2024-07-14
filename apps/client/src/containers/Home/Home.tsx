@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useLazyQuery } from '@apollo/client'
 
 import { GET_ALL_CARDS } from '../../graphql/queries'
 import GameCardList from '../../components/GameCardList'
@@ -10,7 +10,7 @@ export const PER_PAGE = 5
 const Home: React.FC = () => {
   const [pageNo, setPageNo] = useState<number>(1)
 
-  const { data, fetchMore } = useQuery(GET_ALL_CARDS, {
+  const [fetchMore, { data }] = useLazyQuery(GET_ALL_CARDS, {
     variables: { pageNo, perPage: PER_PAGE },
   })
 

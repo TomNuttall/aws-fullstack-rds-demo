@@ -44,8 +44,6 @@ describe('Pagination', () => {
       />,
     )
 
-    screen.debug()
-
     // Assert
     expect(screen.queryByText('Previous')).toBe(null)
     expect(await screen.findByText('Next')).toBeInTheDocument()
