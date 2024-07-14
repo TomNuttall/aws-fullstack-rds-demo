@@ -11,25 +11,37 @@ import {
 interface PaginationProps {
   pageNo: number
   perPage: number
-  totalPages: number
+  totalResults: number
   setPageNo: (pageNo: number) => void
 }
+
+const NUM_PAGES = 5
 
 const Pagination: React.FC<PaginationProps> = ({
   pageNo,
   perPage,
-  totalPages,
+  totalResults,
   setPageNo,
 }) => {
-  if (totalPages <= 0) return <></>
+  if (totalResults <= 0) return <></>
 
-  const pageNumbers = new Array(Math.round(totalPages / perPage))
-    .fill(0)
-    .map((_, idx) => idx + 1)
+  const totalPages = Math.round(totalResults / perPage)
+  const pageNumbers = new Array(totalPages).fill(0).map((_, idx) => idx + 1)
+  const maxOffset = totalPages - NUM_PAGES
+
+  let offset = 0
+  if (pageNo >= NUM_PAGES) {
+    if (pageNo > maxOffset) {
+      offset = maxOffset
+    } else {
+      offset = pageNo - 3
+    }
+  }
+  const activePages = pageNumbers.slice(offset, offset + NUM_PAGES)
 
   return (
-    <PaginationNav className="mt-6 ">
-      <PaginationContent className="bg-white">
+    <PaginationNav className="mt-12">
+      <PaginationContent>
         {pageNo > 1 && (
           <PaginationItem>
             <PaginationPrevious
@@ -38,23 +50,19 @@ const Pagination: React.FC<PaginationProps> = ({
             />
           </PaginationItem>
         )}
-        {pageNumbers.slice(pageNo - 1, pageNo + 2).map((pageIdx) => (
+        {activePages.map((pageIdx) => (
           <PaginationItem>
             <PaginationLink
               href="#"
               isActive={pageNo === pageIdx}
               onClick={() => setPageNo(pageIdx)}
+              aria-label={`Go to page ${pageIdx}`}
             >
               {pageIdx}
             </PaginationLink>
           </PaginationItem>
         ))}
-        {pageNumbers.length > 3 && pageNo < pageNumbers.length - 3 && (
-          <PaginationItem>
-            <PaginationEllipsis />
-          </PaginationItem>
-        )}
-        {pageNo < pageNumbers.length && (
+        {pageNo < totalPages && (
           <PaginationItem>
             <PaginationNext href="#" onClick={() => setPageNo(pageNo + 1)} />
           </PaginationItem>

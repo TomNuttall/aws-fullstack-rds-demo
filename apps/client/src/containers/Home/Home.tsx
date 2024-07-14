@@ -19,7 +19,7 @@ const Home: React.FC = () => {
   }, [pageNo])
 
   const cardsData = data?.getAllCards?.paginatedData
-  const totalPages = data?.getAllCards?.paginatedTotal ?? 0
+  const totalResults = data?.getAllCards?.paginatedTotal ?? 0
 
   return (
     <div className="container" data-testid="home">
@@ -31,7 +31,7 @@ const Home: React.FC = () => {
           <Pagination
             pageNo={pageNo}
             perPage={PER_PAGE}
-            totalPages={totalPages}
+            totalResults={totalResults}
             setPageNo={setPageNo}
           />
         </>
