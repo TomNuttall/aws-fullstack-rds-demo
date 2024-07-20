@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "main": "dist/index.js",
-  "types": "dist/main.d.ts",
   "files": [
     "dist"
   ],
@@ -11,8 +10,8 @@
     "build": "tsc -p tsconfig.json",
     "generate": "yarn drizzle-kit generate",
     "generate:new": "yarn generate --custom",
+    "migrate:local": "yarn tsx -r dotenv/config utils/migrate.ts utils/drizzle.config.ts",
     "studio": "yarn drizzle-kit studio",
-    "migrate": "yarn tsx -r dotenv/config utils/migrate.ts utils/drizzle.config.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.32.0",
