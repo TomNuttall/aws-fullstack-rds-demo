@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1721475106059,
+      "tag": "0000_oval_switch",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1721481663069,
+      "tag": "0001_classy_matthew_murdock",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1721497975082,
+      "tag": "0002_first_robbie_robertson",
+      "breakpoints": true
+    }
+  ]
+}

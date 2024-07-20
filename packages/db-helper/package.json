@@ -1,0 +1,22 @@
+{
+  "name": "db-helpers",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/index.js",
+  "scripts": {
+    "generate": "yarn drizzle-kit generate",
+    "generate:new": "yarn generate --custom",
+    "studio": "yarn drizzle-kit studio",
+    "migrate": "yarn tsx -r dotenv/config src/utils/migrate.ts"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.32.0",
+    "mysql2": "^3.10.3"
+  },
+  "devDependencies": {
+    "dotenv": "^16.4.5",
+    "drizzle-kit": "^0.23.0",
+    "tsx": "^4.16.2",
+    "typescript": "^5.5.3"
+  }
+}

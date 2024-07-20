@@ -8,14 +8,14 @@ services:
     volumes:
       - my-db:/var/lib/mysql
 
-  test-db:
-    image: arm64v8/mysql
-    env_file:
-      - .env
-    ports:
-      - '3307:3307'
-    volumes:
-      - my-testdb:/var/lib/mysql-test
+  # test-db:
+  #   image: arm64v8/mysql
+  #   env_file:
+  #     - .env
+  #   ports:
+  #     - '3307:3307'
+  #   volumes:
+  #     - my-testdb:/var/lib/mysql-test
 
 volumes:
   my-db:
