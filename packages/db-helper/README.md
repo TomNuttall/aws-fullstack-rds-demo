@@ -1,6 +1,3 @@
 ## Docs
 
-```
-dbdocs login
-dbdocs build
-```
+yarn add @tn/db-helpers@file:./../../packages/db-helpers

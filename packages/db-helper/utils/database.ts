@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise'
 import { drizzle } from 'drizzle-orm/mysql2'
-import * as schema from '../schema'
+import * as schema from '../src/schema'
 import * as dotenv from 'dotenv'
 
 dotenv.config()
