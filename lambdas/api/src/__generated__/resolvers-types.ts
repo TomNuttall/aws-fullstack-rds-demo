@@ -20,6 +20,8 @@ export type Scalars = {
 export type Card = {
   __typename?: 'Card';
   id?: Maybe<Scalars['Int']['output']>;
+  name?: Maybe<Scalars['String']['output']>;
+  shiny?: Maybe<Scalars['Boolean']['output']>;
   value?: Maybe<Scalars['Int']['output']>;
 };
 
@@ -48,19 +50,19 @@ export type PaginatedCard = {
 export type Query = {
   __typename?: 'Query';
   getAllCards?: Maybe<PaginatedCard>;
-  getMyCards?: Maybe<PaginatedCard>;
+  getCard?: Maybe<Card>;
 };
 
 
 export type QueryGetAllCardsArgs = {
+  filter?: InputMaybe<Scalars['String']['input']>;
   pageNo: Scalars['Int']['input'];
   perPage: Scalars['Int']['input'];
 };
 
 
-export type QueryGetMyCardsArgs = {
-  pageNo: Scalars['Int']['input'];
-  perPage: Scalars['Int']['input'];
+export type QueryGetCardArgs = {
+  cardId: Scalars['Int']['input'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -157,6 +159,8 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type CardResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Card'] = ResolversParentTypes['Card']> = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  shiny?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -174,7 +178,7 @@ export type PaginatedCardResolvers<ContextType = Context, ParentType extends Res
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
   getAllCards?: Resolver<Maybe<ResolversTypes['PaginatedCard']>, ParentType, ContextType, RequireFields<QueryGetAllCardsArgs, 'pageNo' | 'perPage'>>;
-  getMyCards?: Resolver<Maybe<ResolversTypes['PaginatedCard']>, ParentType, ContextType, RequireFields<QueryGetMyCardsArgs, 'pageNo' | 'perPage'>>;
+  getCard?: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<QueryGetCardArgs, 'cardId'>>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{

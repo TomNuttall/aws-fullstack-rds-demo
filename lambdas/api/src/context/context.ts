@@ -1,14 +1,20 @@
-import { Card } from '../__generated__/resolvers-types'
 import { createClerkClient } from '@clerk/backend'
-import { mockedTestData } from '../../tests/mocks/mocks'
+import mysql from 'mysql2/promise'
+import { drizzle, type MySql2Database } from 'drizzle-orm/mysql2'
+import { schema } from '@tn/db-helper'
 
-export interface TestData {
-  cards: Card[]
-}
+const poolConnection = mysql.createPool({
+  host: process.env.DB_HOST,
+  port: Number(process.env.DB_PORT),
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
+})
+const db = drizzle(poolConnection, { schema: schema, mode: 'default' })
 
 export interface Context {
-  testData: TestData
-  userId: string | undefined
+  orm: MySql2Database<typeof schema>
+  userId: number //string | undefined
   isLoggedIn: boolean
 }
 
@@ -27,7 +33,7 @@ export const createContext = async ({ req }): Promise<Context> => {
 
     if (isSignedIn) {
       const user = toAuth()
-      userId = user.userId
+      // userId = user.userId
       isLoggedIn = true
     }
   } catch (e) {}
@@ -35,8 +41,8 @@ export const createContext = async ({ req }): Promise<Context> => {
   console.log(`REQUEST - user: ${userId} operation: ${req.body.operationName}`)
 
   return {
-    testData: mockedTestData,
-    userId,
+    orm: db,
+    userId: 1,
     isLoggedIn,
   }
 }
