@@ -1,2 +1,2 @@
-export * as schema from './schema'
-export * from './types'
+export * as schema from './schema/index.js'
+export * from './types.js'

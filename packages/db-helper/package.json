@@ -2,6 +2,7 @@
   "name": "db-helpers",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "files": [
@@ -23,7 +24,7 @@
     "@types/node": "^20.14.11",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.23.0",
-    "tsup": "^8.2.1",
+    "tsup": "^8.2.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3"
   }

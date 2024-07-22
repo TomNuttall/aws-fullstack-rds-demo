@@ -1,2 +1,2 @@
-export * from './tables.sql'
-export * from './views.sql'
+export * from './tables.sql.js'
+export * from './views.sql.js'
