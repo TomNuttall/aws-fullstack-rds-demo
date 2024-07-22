@@ -1,0 +1,1 @@
+ALTER TABLE `CardToUser` ADD CONSTRAINT `CardToUser_cardId_userId_unique` UNIQUE(`cardId`,`userId`);
