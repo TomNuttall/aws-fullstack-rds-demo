@@ -2,7 +2,7 @@
 
 Demo Project to explore setting up RDS.
 
-Uses a GraphQL backend and Simple React App for testing.
+Uses a GraphQL backend with DrizzleORM and Simple React App for testing.
 
 ## Architecture Diagram
 
