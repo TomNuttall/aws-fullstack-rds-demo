@@ -15,4 +15,4 @@ Apply local migrations
 
 ### Package
 
-`yarn add @tn/db-helpers@file:./../../packages/db-helpers`
+`yarn add @tn/db-helper@file:./../../packages/db-helper`

@@ -21,7 +21,7 @@ const GameCard: React.FC<GameCardProps> = ({ data }) => {
     <Card className="bg-white">
       <CardHeader>
         <CardTitle>{`Card ${data?.id}`}</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>{data?.name}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>{data?.value}</p>
