@@ -2,6 +2,7 @@ import { createClerkClient } from '@clerk/backend'
 import mysql from 'mysql2/promise'
 import { drizzle, type MySql2Database } from 'drizzle-orm/mysql2'
 import { schema } from '@tn/db-helper'
+import { getUser } from './utils/getUser'
 
 const poolConnection = mysql.createPool({
   host: process.env.DB_HOST,
@@ -14,7 +15,7 @@ const db = drizzle(poolConnection, { schema: schema, mode: 'default' })
 
 export interface Context {
   orm: MySql2Database<typeof schema>
-  userId: string
+  userId: number
   isLoggedIn: boolean
 }
 
@@ -25,7 +26,7 @@ const clerkClient = createClerkClient({
 
 //@ts-ignore
 export const createContext = async ({ req }): Promise<Context> => {
-  let userId: string = ''
+  let userId: number = 0
   let isLoggedIn = false
   try {
     req.url = process.env.APP_URL ?? req.url
@@ -33,7 +34,7 @@ export const createContext = async ({ req }): Promise<Context> => {
 
     if (isSignedIn) {
       const user = toAuth()
-      userId = user.userId
+      userId = await getUser(user.userId, db)
       isLoggedIn = true
     }
   } catch (e) {}

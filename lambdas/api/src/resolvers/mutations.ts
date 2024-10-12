@@ -5,21 +5,25 @@ import { MutationResolvers } from '../__generated__/resolvers-types.js'
 
 const mutations: MutationResolvers = {
   favouriteCard: async (_, { cardId }, { orm, userId }) => {
-    const [{ insertId }] = await orm
+    await orm
       .insert(schema.cardToUser)
-      .values({ cardId, userId })
+      .values({ cardId: cardId, userId: userId })
 
-    const card = await orm
+    const [card] = await orm
       .select()
       .from(cardsView)
-      .where(eq(cardsView.id, insertId))
+      .where(eq(cardsView.cardId, cardId))
 
-    console.log('Add: ', card)
-    return null
+    return {
+      id: card.id,
+      name: card.cardName,
+      value: card.cardValue,
+      shiny: card.isShiny,
+    }
   },
 
   unfavouriteCard: async (_, { cardId }, { orm, userId }) => {
-    const card = await orm
+    const [card] = await orm
       .select()
       .from(cardsView)
       .where(and(eq(cardsView.cardId, cardId), eq(cardsView.userId, userId)))
@@ -33,8 +37,12 @@ const mutations: MutationResolvers = {
         ),
       )
 
-    console.log('Remove: ', card)
-    return null
+    return {
+      id: card.id,
+      name: card.cardName,
+      value: card.cardValue,
+      shiny: card.isShiny,
+    }
   },
 }
 
