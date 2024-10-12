@@ -6,17 +6,17 @@ services:
     ports:
       - '3306:3306'
     volumes:
-      - my-db:/var/lib/mysql
+      - dev-db:/var/lib/mysql
 
-  # test-db:
-  #   image: arm64v8/mysql
-  #   env_file:
-  #     - .env
-  #   ports:
-  #     - '3307:3307'
-  #   volumes:
-  #     - my-testdb:/var/lib/mysql-test
+  test-db:
+    image: arm64v8/mysql
+    env_file:
+      - .env.test
+    ports:
+      - '3307:3306'
+    volumes:
+      - dev-test-db:/var/lib/mysql-test
 
 volumes:
-  my-db:
-  my-testdb:
+  dev-db:
+  dev-test-db:

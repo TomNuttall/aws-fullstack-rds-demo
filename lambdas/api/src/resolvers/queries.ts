@@ -8,6 +8,7 @@ const queries: QueryResolvers = {
       .select()
       .from(schema.card)
       .where(eq(schema.card.id, cardId))
+
     return card
   },
 

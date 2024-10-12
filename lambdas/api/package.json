@@ -5,9 +5,8 @@
   "license": "MIT",
   "scripts": {
     "generate": "graphql-codegen --config codegen.ts",
-    "compile": "yarn generate && tsc",
     "dev": "tsx watch -r dotenv/config src/index.ts",
-    "build": "yarn tsc -p tsconfig.json && cp -r ./src/schemas ./dist",
+    "build": "tsx && cp -r ./src/schemas ./dist",
     "test": "NODE_OPTIONS=--experimental-vm-modules jest",
     "test:watch": "NODE_OPTIONS=--experimental-vm-modules jest --watch"
   },

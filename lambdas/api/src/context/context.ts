@@ -14,7 +14,7 @@ const db = drizzle(poolConnection, { schema: schema, mode: 'default' })
 
 export interface Context {
   orm: MySql2Database<typeof schema>
-  userId: number //string | undefined
+  userId: string
   isLoggedIn: boolean
 }
 
@@ -25,7 +25,7 @@ const clerkClient = createClerkClient({
 
 //@ts-ignore
 export const createContext = async ({ req }): Promise<Context> => {
-  let userId: string | undefined = undefined
+  let userId: string = ''
   let isLoggedIn = false
   try {
     req.url = process.env.APP_URL ?? req.url
@@ -33,7 +33,7 @@ export const createContext = async ({ req }): Promise<Context> => {
 
     if (isSignedIn) {
       const user = toAuth()
-      // userId = user.userId
+      userId = user.userId
       isLoggedIn = true
     }
   } catch (e) {}
@@ -42,7 +42,7 @@ export const createContext = async ({ req }): Promise<Context> => {
 
   return {
     orm: db,
-    userId: 1,
+    userId,
     isLoggedIn,
   }
 }
