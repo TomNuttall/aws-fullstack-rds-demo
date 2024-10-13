@@ -2,7 +2,7 @@ services:
   db:
     image: arm64v8/mysql
     env_file:
-      - .env
+      - ../.env
     ports:
       - '3306:3306'
     volumes:
@@ -11,7 +11,7 @@ services:
   test-db:
     image: arm64v8/mysql
     env_file:
-      - .env.test
+      - ../.env.test.local
     ports:
       - '3307:3306'
     volumes:
