@@ -20,8 +20,9 @@ export type Scalars = {
 export type Card = {
   __typename?: 'Card';
   id: Maybe<Scalars['Int']['output']>;
+  isFavourite: Maybe<Scalars['Boolean']['output']>;
+  isShiny: Maybe<Scalars['Boolean']['output']>;
   name: Maybe<Scalars['String']['output']>;
-  shiny: Maybe<Scalars['Boolean']['output']>;
   value: Maybe<Scalars['Int']['output']>;
 };
 
@@ -159,8 +160,9 @@ export type ResolversParentTypes = ResolversObject<{
 
 export type CardResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Card'] = ResolversParentTypes['Card']> = ResolversObject<{
   id: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  isFavourite: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isShiny: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   name: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  shiny: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   value: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
