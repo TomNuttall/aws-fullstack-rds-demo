@@ -2,7 +2,8 @@ type Card {
   id: Int
   name: String
   value: Int
-  shiny: Boolean
+  isShiny: Boolean
+  isFavourite: Boolean
 }
 
 type PaginatedCard {

@@ -6,7 +6,8 @@ export const GET_CARD = gql(`
       id
       name
       value
-      shiny
+      isShiny
+      isFavourite
     }
   }
 `)
@@ -18,7 +19,8 @@ export const GET_ALL_CARDS = gql(`
         id
         name
         value
-        shiny
+        isShiny
+        isFavourite
       }
       paginatedTotal
     }

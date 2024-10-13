@@ -16,7 +16,9 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ data }) => {
-  const [favourited, setFavourited] = useState<boolean>(false)
+  const [favourited, setFavourited] = useState<boolean>(
+    data?.isFavourite || false,
+  )
   return (
     <Card className="bg-white">
       <CardHeader>

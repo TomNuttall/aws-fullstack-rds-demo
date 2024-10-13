@@ -6,7 +6,8 @@ export const FAVOURITE_CARD = gql(`
       id
       name
       value
-      shiny
+      isShiny
+      isFavourite
     }
   }
 `)
@@ -17,7 +18,8 @@ export const UNFAVOURITE_CARD = gql(`
       id
       name
       value
-      shiny
+      isShiny
+      isFavourite
     }
   }
 `)
