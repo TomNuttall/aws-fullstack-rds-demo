@@ -1,9 +1,12 @@
+import mysql from 'mysql2/promise'
 import { migrate } from 'drizzle-orm/mysql2/migrator'
-import { db, poolConnection } from './database.js'
+import { getDbConnection } from '../src/database.js'
 
-export const runMigrations = async () => {
-  await migrate(db, { migrationsFolder: './migrations' })
+export const runMigrations = async (config: mysql.PoolOptions) => {
+  const { orm, poolConnection } = getDbConnection(config)
+
+  await migrate(orm, { migrationsFolder: './migrations' })
   await poolConnection.end()
 }
 
-runMigrations()
+runMigrations({})
