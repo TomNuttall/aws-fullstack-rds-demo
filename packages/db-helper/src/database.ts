@@ -1,10 +1,14 @@
 import mysql from 'mysql2/promise'
-import { drizzle } from 'drizzle-orm/mysql2'
-import { schema } from './index.js'
+import { drizzle, MySql2Database } from 'drizzle-orm/mysql2'
 
-export const getDbConnection = (config: mysql.PoolOptions) => {
+export interface dbConnection {
+  orm: MySql2Database
+  poolConnection: mysql.Pool
+}
+
+export const getDbConnection = (config: mysql.PoolOptions): dbConnection => {
   const poolConnection = mysql.createPool(config)
-  const orm = drizzle(poolConnection, { schema: schema, mode: 'default' })
+  const orm = drizzle(poolConnection)
 
   return { orm, poolConnection }
 }
