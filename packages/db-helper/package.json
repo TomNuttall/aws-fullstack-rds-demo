@@ -9,7 +9,6 @@
     "dist"
   ],
   "scripts": {
-    "build": "tsup",
     "generate": "yarn drizzle-kit generate",
     "generate:new": "yarn generate --custom",
     "migrate:local": "yarn tsx --env-file=../../.env utils/migrate.ts utils/drizzle.config.ts",
@@ -27,8 +26,6 @@
     "@types/node": "^20.14.11",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.25.0",
-    "tsup": "^8.2.2",
-    "tsx": "^4.16.2",
-    "typescript": "^5.5.3"
+    "tsx": "^4.19.1"
   }
 }
