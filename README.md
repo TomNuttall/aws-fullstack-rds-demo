@@ -1,8 +1,8 @@
 # aws-fullstack-demo
 
-Demo Project to explore setting up RDS.
+Demo Project to explore setting up Aurora.
 
-Uses a GraphQL backend with DrizzleORM and Simple React App for testing.
+Uses a GraphQL backend with DrizzleORM and a React app for testing.
 
 ## Architecture Diagram
 
