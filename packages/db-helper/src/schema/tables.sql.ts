@@ -5,6 +5,7 @@ import {
   varchar,
   boolean,
   timestamp,
+  unique,
 } from 'drizzle-orm/mysql-core'
 
 export const card = mysqlTable('Card', {
@@ -23,12 +24,18 @@ export const user = mysqlTable('User', {
   updatedAt: timestamp('updatedAt').onUpdateNow(),
 })
 
-export const cardToUser = mysqlTable('CardToUser', {
-  id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
-  cardId: bigint('cardId', { mode: 'number' }).references(() => card.id, {
-    onDelete: 'cascade',
+export const cardToUser = mysqlTable(
+  'CardToUser',
+  {
+    id: bigint('id', { mode: 'number' }).primaryKey().autoincrement(),
+    cardId: bigint('cardId', { mode: 'number' }).references(() => card.id, {
+      onDelete: 'cascade',
+    }),
+    userId: bigint('userId', { mode: 'number' }).references(() => user.id, {
+      onDelete: 'cascade',
+    }),
+  },
+  (t) => ({
+    unq: unique().on(t.cardId, t.userId),
   }),
-  userId: bigint('userId', { mode: 'number' }).references(() => user.id, {
-    onDelete: 'cascade',
-  }),
-})
+)

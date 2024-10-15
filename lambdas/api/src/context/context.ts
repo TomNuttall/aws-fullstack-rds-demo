@@ -1,14 +1,14 @@
-import { Card } from '../__generated__/resolvers-types'
+import { eq } from 'drizzle-orm'
+import { MySql2Database } from 'drizzle-orm/mysql2'
 import { createClerkClient } from '@clerk/backend'
-import { mockedTestData } from '../../tests/mocks/mocks'
+import { getDbConnection, schema } from '@tn/db-helper'
+import { getUser } from './utils/getUser'
 
-export interface TestData {
-  cards: Card[]
-}
+const { orm } = getDbConnection()
 
 export interface Context {
-  testData: TestData
-  userId: string | undefined
+  orm: any
+  userId: number
   isLoggedIn: boolean
 }
 
@@ -17,17 +17,18 @@ const clerkClient = createClerkClient({
   publishableKey: process.env.CLERK_PUBLISHABLE_KEY,
 })
 
-//@ts-ignore
 export const createContext = async ({ req }): Promise<Context> => {
-  let userId: string | undefined = undefined
+  let userId: number = 1
   let isLoggedIn = false
+
   try {
     req.url = process.env.APP_URL ?? req.url
     const { isSignedIn, toAuth } = await clerkClient.authenticateRequest(req)
 
     if (isSignedIn) {
       const user = toAuth()
-      userId = user.userId
+
+      userId = await getUser(user.userId, orm)
       isLoggedIn = true
     }
   } catch (e) {}
@@ -35,7 +36,7 @@ export const createContext = async ({ req }): Promise<Context> => {
   console.log(`REQUEST - user: ${userId} operation: ${req.body.operationName}`)
 
   return {
-    testData: mockedTestData,
+    orm,
     userId,
     isLoggedIn,
   }

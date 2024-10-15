@@ -31,4 +31,5 @@ export const apolloServer = new ApolloServer<Context>({
       : ApolloServerPluginLandingPageLocalDefault(),
     ApolloServerPluginDrainHttpServer({ httpServer }),
   ],
+  introspection: process.env.NODE_ENV !== 'production',
 })

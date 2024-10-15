@@ -8,10 +8,8 @@ import {
 
 export const cardsView = mysqlView('CardsView', {
   id: bigint('id', { mode: 'number' }),
-  userId: bigint('id', { mode: 'number' }),
-  userName: varchar('userName', { length: 256 }),
-  cardId: bigint('id', { mode: 'number' }),
-  cardName: varchar('cardName', { length: 256 }).notNull(),
-  cardValue: int('cardValue').notNull(),
+  name: varchar('name', { length: 256 }).notNull(),
+  value: int('value').notNull(),
   isShiny: boolean('isShiny'),
+  userId: bigint('userId', { mode: 'number' }),
 }).existing()

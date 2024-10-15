@@ -13,10 +13,10 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  * Therefore it is highly recommended to use the babel or swc plugin for production.
  */
 const documents = {
-    "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.FavouriteCardDocument,
-    "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n": types.UnfavouriteCardDocument,
-    "\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n": types.GetAllCardsDocument,
-    "\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n": types.GetMyCardsDocument,
+    "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.FavouriteCardDocument,
+    "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.UnfavouriteCardDocument,
+    "\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.GetCardDocument,
+    "\n  query GetAllCards($pageNo: Int!, $perPage: Int!, $filter: String) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage, filter: $filter) {\n      paginatedData {\n        id\n        name\n        value\n        isShiny\n        isFavourite\n      }\n      paginatedTotal\n    }\n  }\n": types.GetAllCardsDocument,
 };
 
 /**
@@ -36,19 +36,19 @@ export function gql(source: string): unknown;
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"): (typeof documents)["\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"): (typeof documents)["\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      value\n    }\n  }\n"];
+export function gql(source: "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"): (typeof documents)["\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"): (typeof documents)["\n  query GetAllCards($pageNo: Int!, $perPage: Int!) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"];
+export function gql(source: "\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"): (typeof documents)["\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"): (typeof documents)["\n  query GetMyCards($pageNo: Int!, $perPage: Int!) {\n    getMyCards(pageNo: $pageNo, perPage: $perPage) {\n      paginatedData {\n        id\n        value\n      }\n      paginatedTotal\n    }\n  }\n"];
+export function gql(source: "\n  query GetAllCards($pageNo: Int!, $perPage: Int!, $filter: String) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage, filter: $filter) {\n      paginatedData {\n        id\n        name\n        value\n        isShiny\n        isFavourite\n      }\n      paginatedTotal\n    }\n  }\n"): (typeof documents)["\n  query GetAllCards($pageNo: Int!, $perPage: Int!, $filter: String) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage, filter: $filter) {\n      paginatedData {\n        id\n        name\n        value\n        isShiny\n        isFavourite\n      }\n      paginatedTotal\n    }\n  }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

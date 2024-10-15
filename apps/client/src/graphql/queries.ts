@@ -1,27 +1,28 @@
 import { gql } from '../__generated__/gql'
 
-const GET_ALL_CARDS = gql(`
-  query GetAllCards($pageNo: Int!, $perPage: Int!) {
-    getAllCards(pageNo: $pageNo, perPage: $perPage) {
+export const GET_CARD = gql(`
+  query GetCard($cardId: Int!) {
+    getCard(cardId: $cardId) {
+      id
+      name
+      value
+      isShiny
+      isFavourite
+    }
+  }
+`)
+
+export const GET_ALL_CARDS = gql(`
+  query GetAllCards($pageNo: Int!, $perPage: Int!, $filter: String) {
+    getAllCards(pageNo: $pageNo, perPage: $perPage, filter: $filter) {
       paginatedData {
         id
+        name
         value
+        isShiny
+        isFavourite
       }
       paginatedTotal
     }
   }
 `)
-
-const GET_MY_CARDS = gql(`
-  query GetMyCards($pageNo: Int!, $perPage: Int!) {
-    getMyCards(pageNo: $pageNo, perPage: $perPage) {
-      paginatedData {
-        id
-        value
-      }
-      paginatedTotal
-    }
-  }
-`)
-
-export { GET_ALL_CARDS, GET_MY_CARDS }

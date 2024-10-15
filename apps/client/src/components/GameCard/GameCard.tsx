@@ -16,12 +16,14 @@ interface GameCardProps {
 }
 
 const GameCard: React.FC<GameCardProps> = ({ data }) => {
-  const [favourited, setFavourited] = useState<boolean>(false)
+  const [favourited, setFavourited] = useState<boolean>(
+    data?.isFavourite || false,
+  )
   return (
     <Card className="bg-white">
       <CardHeader>
         <CardTitle>{`Card ${data?.id}`}</CardTitle>
-        <CardDescription>Card Description</CardDescription>
+        <CardDescription>{data?.name}</CardDescription>
       </CardHeader>
       <CardContent>
         <p>{data?.value}</p>

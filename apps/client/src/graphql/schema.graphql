@@ -1,6 +1,9 @@
 type Card {
   id: Int
+  name: String
   value: Int
+  isShiny: Boolean
+  isFavourite: Boolean
 }
 
 type PaginatedCard {
@@ -9,8 +12,8 @@ type PaginatedCard {
 }
 
 type Query {
-  getAllCards(pageNo: Int!, perPage: Int!): PaginatedCard
-  getMyCards(pageNo: Int!, perPage: Int!): PaginatedCard
+  getCard(cardId: Int!): Card
+  getAllCards(pageNo: Int!, perPage: Int!, filter: String): PaginatedCard
 }
 
 type Mutation {

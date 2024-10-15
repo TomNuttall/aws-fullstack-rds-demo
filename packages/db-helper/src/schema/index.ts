@@ -1,2 +1,2 @@
-export * from './tables.sql'
-export * from './views.sql'
+export { card, cardToUser, user } from './tables.sql.js'
+export { cardsView } from './views.sql.js'

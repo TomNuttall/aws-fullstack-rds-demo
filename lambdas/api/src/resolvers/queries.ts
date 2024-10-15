@@ -1,34 +1,31 @@
-import { QueryResolvers } from '../__generated__/resolvers-types'
+import { eq, asc } from 'drizzle-orm'
+import { schema } from '@tn/db-helper'
+import { QueryResolvers } from '../__generated__/resolvers-types.js'
+import { transformCard } from '../transformers/transformCard'
 
 const queries: QueryResolvers = {
-  getAllCards: async (_, args, context) => {
-    const { pageNo, perPage } = args
-    const {
-      testData: { cards },
-    } = context
+  getCard: async (_, { cardId }, { orm }) => {
+    const rows = await orm.select().from(schema.cardsView).where(
+      // @ts-ignore
+      eq(schema.cardsView.id, cardId),
+    )
 
-    const offsetStart = (pageNo - 1) * perPage
-    const offsetEnd = pageNo * perPage
-
-    return {
-      paginatedData: cards.slice(offsetStart, offsetEnd),
-      paginatedTotal: cards.length,
-    }
+    const [card] = transformCard(rows)
+    return card
   },
 
-  getMyCards: async (_, args, context) => {
-    const { pageNo, perPage } = args
-    const {
-      testData: { cards },
-    } = context
-
-    // logged in user from context
-    const offsetStart = (pageNo - 1) * perPage
-    const offsetEnd = pageNo * perPage
+  getAllCards: async (_, { pageNo, perPage, filter }, { orm }) => {
+    const rows = await orm
+      .select()
+      .from(schema.cardsView)
+      // @ts-ignore
+      .orderBy(asc(schema.cardsView.id))
+      .limit(perPage)
+      .offset((pageNo - 1) * perPage)
 
     return {
-      paginatedData: cards.slice(offsetStart, offsetEnd),
-      paginatedTotal: cards.length,
+      paginatedData: transformCard(rows),
+      paginatedTotal: 1,
     }
   },
 }

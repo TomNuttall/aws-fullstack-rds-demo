@@ -1,7 +1,7 @@
-import { apolloServer, app, httpServer } from './server'
 import { expressMiddleware } from '@apollo/server/express4'
 import cors from 'cors'
 import express from 'express'
+import { apolloServer, app, httpServer } from './server'
 import { createContext } from './context/context'
 
 const main = async () => {

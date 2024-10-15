@@ -22,6 +22,20 @@
       "when": 1721497975082,
       "tag": "0002_first_robbie_robertson",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1721678505220,
+      "tag": "0003_supreme_maximus",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1728815171490,
+      "tag": "0004_fine_marrow",
+      "breakpoints": true
     }
   ]
 }

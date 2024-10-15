@@ -19,14 +19,17 @@ export type Scalars = {
 
 export type Card = {
   __typename?: 'Card';
-  id?: Maybe<Scalars['Int']['output']>;
-  value?: Maybe<Scalars['Int']['output']>;
+  id: Maybe<Scalars['Int']['output']>;
+  isFavourite: Maybe<Scalars['Boolean']['output']>;
+  isShiny: Maybe<Scalars['Boolean']['output']>;
+  name: Maybe<Scalars['String']['output']>;
+  value: Maybe<Scalars['Int']['output']>;
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
-  favouriteCard?: Maybe<Card>;
-  unfavouriteCard?: Maybe<Card>;
+  favouriteCard: Maybe<Card>;
+  unfavouriteCard: Maybe<Card>;
 };
 
 
@@ -41,26 +44,26 @@ export type MutationUnfavouriteCardArgs = {
 
 export type PaginatedCard = {
   __typename?: 'PaginatedCard';
-  paginatedData?: Maybe<Array<Maybe<Card>>>;
-  paginatedTotal?: Maybe<Scalars['Int']['output']>;
+  paginatedData: Maybe<Array<Maybe<Card>>>;
+  paginatedTotal: Maybe<Scalars['Int']['output']>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  getAllCards?: Maybe<PaginatedCard>;
-  getMyCards?: Maybe<PaginatedCard>;
+  getAllCards: Maybe<PaginatedCard>;
+  getCard: Maybe<Card>;
 };
 
 
 export type QueryGetAllCardsArgs = {
+  filter: InputMaybe<Scalars['String']['input']>;
   pageNo: Scalars['Int']['input'];
   perPage: Scalars['Int']['input'];
 };
 
 
-export type QueryGetMyCardsArgs = {
-  pageNo: Scalars['Int']['input'];
-  perPage: Scalars['Int']['input'];
+export type QueryGetCardArgs = {
+  cardId: Scalars['Int']['input'];
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -156,31 +159,34 @@ export type ResolversParentTypes = ResolversObject<{
 }>;
 
 export type CardResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Card'] = ResolversParentTypes['Card']> = ResolversObject<{
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  isFavourite: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  isShiny: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  name: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type MutationResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = ResolversObject<{
-  favouriteCard?: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<MutationFavouriteCardArgs, 'cardId'>>;
-  unfavouriteCard?: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<MutationUnfavouriteCardArgs, 'cardId'>>;
+  favouriteCard: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<MutationFavouriteCardArgs, 'cardId'>>;
+  unfavouriteCard: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<MutationUnfavouriteCardArgs, 'cardId'>>;
 }>;
 
 export type PaginatedCardResolvers<ContextType = Context, ParentType extends ResolversParentTypes['PaginatedCard'] = ResolversParentTypes['PaginatedCard']> = ResolversObject<{
-  paginatedData?: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType>;
-  paginatedTotal?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  paginatedData: Resolver<Maybe<Array<Maybe<ResolversTypes['Card']>>>, ParentType, ContextType>;
+  paginatedTotal: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = ResolversObject<{
-  getAllCards?: Resolver<Maybe<ResolversTypes['PaginatedCard']>, ParentType, ContextType, RequireFields<QueryGetAllCardsArgs, 'pageNo' | 'perPage'>>;
-  getMyCards?: Resolver<Maybe<ResolversTypes['PaginatedCard']>, ParentType, ContextType, RequireFields<QueryGetMyCardsArgs, 'pageNo' | 'perPage'>>;
+  getAllCards: Resolver<Maybe<ResolversTypes['PaginatedCard']>, ParentType, ContextType, RequireFields<QueryGetAllCardsArgs, 'pageNo' | 'perPage'>>;
+  getCard: Resolver<Maybe<ResolversTypes['Card']>, ParentType, ContextType, RequireFields<QueryGetCardArgs, 'cardId'>>;
 }>;
 
 export type Resolvers<ContextType = Context> = ResolversObject<{
-  Card?: CardResolvers<ContextType>;
-  Mutation?: MutationResolvers<ContextType>;
-  PaginatedCard?: PaginatedCardResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
+  Card: CardResolvers<ContextType>;
+  Mutation: MutationResolvers<ContextType>;
+  PaginatedCard: PaginatedCardResolvers<ContextType>;
+  Query: QueryResolvers<ContextType>;
 }>;
 
