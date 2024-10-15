@@ -1,3 +1,4 @@
+import { describe, it, expect } from '@jest/globals'
 import { isAuthenticated } from '../../src/permissions/rules'
 import { shield } from 'graphql-shield'
 import { graphql } from 'graphql'

@@ -9,13 +9,14 @@
     "dist"
   ],
   "scripts": {
+    "build": "pkgroll",
     "generate": "yarn drizzle-kit generate",
     "generate:new": "yarn generate --custom",
     "migrate:local": "yarn tsx --env-file=../../.env utils/migrate.ts utils/drizzle.config.ts",
     "migrate:local:testing": "yarn tsx --env-file=../../.env.test.local utils/migrate.ts utils/drizzle.config.ts",
     "studio": "yarn --env-file=../../.env drizzle-kit studio",
     "studio:testing": "yarn --env-file=../../.env.test.local drizzle-kit studio",
-    "testing": "yarn tsx --env-file=../../.env utils/example.ts"
+    "dev": "yarn tsx --env-file=../../.env utils/example.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.34.1",
@@ -26,6 +27,8 @@
     "@types/node": "^20.14.11",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.25.0",
-    "tsx": "^4.19.1"
+    "pkgroll": "^2.5.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
   }
 }

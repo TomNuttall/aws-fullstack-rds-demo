@@ -1,23 +1,20 @@
-import { type MySql2Database } from 'drizzle-orm/mysql2'
-import mysql from 'mysql2/promise'
-import { schema } from '@tn/db-helper'
-import { getTestDb } from '../mocks/test-db'
+import { describe, it, expect, afterAll, afterEach } from '@jest/globals'
+import { schema, getDbConnection } from '@tn/db-helper'
 import { userFixture } from '../mocks/fixtures'
 import { getUser } from '../../src/context/utils/getUser'
 
-describe('getUser', () => {
+const { orm, poolConnection } = getDbConnection({
+  host: process.env.MYSQL_HOST,
+  port: Number(process.env.MYSQL_PORT),
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE,
+})
+
+describe('Query Resolvers', () => {
   // Arrange
-  let orm: MySql2Database<typeof schema>
-  let pool: mysql.Pool
-
-  beforeAll(async () => {
-    const testDb = getTestDb()
-    orm = testDb.orm
-    pool = testDb.poolConnection
-  })
-
   afterAll(async () => {
-    pool.end()
+    poolConnection.end()
   })
 
   afterEach(async () => {

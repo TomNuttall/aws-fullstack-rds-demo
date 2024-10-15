@@ -1,28 +1,19 @@
-import { type MySql2Database } from 'drizzle-orm/mysql2'
-import mysql from 'mysql2/promise'
+import { describe, it, expect, afterAll, afterEach } from '@jest/globals'
+import { schema, getDbConnection } from '@tn/db-helper'
+import { Context } from '../../src/context/context'
+import mutations from '../../src/resolvers/mutations'
+import { cardFixture, userFixture } from '../mocks/fixtures'
 import {
   MutationFavouriteCardArgs,
   MutationUnfavouriteCardArgs,
 } from '../../src/__generated__/resolvers-types'
-import { Context } from '../../src/context/context'
-import mutations from '../../src/resolvers/mutations'
-import { schema } from '@tn/db-helper'
-import { getTestDb } from '../mocks/test-db'
-import { cardFixture, userFixture } from '../mocks/fixtures'
 
-describe('Mutation Resolvers', () => {
+const { orm, poolConnection } = getDbConnection()
+
+describe('Query Resolvers', () => {
   // Arrange
-  let orm: MySql2Database<typeof schema>
-  let pool: mysql.Pool
-
-  beforeAll(async () => {
-    const testDb = getTestDb()
-    orm = testDb.orm
-    pool = testDb.poolConnection
-  })
-
   afterAll(async () => {
-    pool.end()
+    poolConnection.end()
   })
 
   describe('FavouriteCard', () => {
@@ -51,7 +42,12 @@ describe('Mutation Resolvers', () => {
       const res = await mutations.favouriteCard(parent, args, context)
 
       // Assert
-      expect(res).toMatchObject(cardFixture)
+      expect(res).toMatchObject({
+        name: cardFixture.name,
+        value: cardFixture.value,
+        isShiny: cardFixture.shiny,
+        isFavourite: true,
+      })
     })
   })
 
@@ -82,7 +78,12 @@ describe('Mutation Resolvers', () => {
       const res = await mutations.unfavouriteCard(parent, args, context)
 
       // Assert
-      expect(res).toMatchObject(cardFixture)
+      expect(res).toMatchObject({
+        name: cardFixture.name,
+        value: cardFixture.value,
+        isShiny: cardFixture.shiny,
+        isFavourite: true,
+      })
     })
   })
 })

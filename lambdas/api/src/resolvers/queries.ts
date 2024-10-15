@@ -1,27 +1,30 @@
 import { eq, asc } from 'drizzle-orm'
 import { schema } from '@tn/db-helper'
 import { QueryResolvers } from '../__generated__/resolvers-types.js'
+import { transformCard } from '../transformers/transformCard'
 
 const queries: QueryResolvers = {
   getCard: async (_, { cardId }, { orm }) => {
-    const [card] = await orm
-      .select()
-      .from(schema.card)
-      .where(eq(schema.card.id, cardId))
+    const rows = await orm.select().from(schema.cardsView).where(
+      // @ts-ignore
+      eq(schema.cardsView.id, cardId),
+    )
 
+    const [card] = transformCard(rows)
     return card
   },
 
   getAllCards: async (_, { pageNo, perPage, filter }, { orm }) => {
-    const cards = await orm
+    const rows = await orm
       .select()
-      .from(schema.card)
-      .orderBy(asc(schema.card.id))
+      .from(schema.cardsView)
+      // @ts-ignore
+      .orderBy(asc(schema.cardsView.id))
       .limit(perPage)
       .offset((pageNo - 1) * perPage)
 
     return {
-      paginatedData: cards,
+      paginatedData: transformCard(rows),
       paginatedTotal: 1,
     }
   },

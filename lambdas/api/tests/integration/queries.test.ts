@@ -1,28 +1,19 @@
-import { type MySql2Database } from 'drizzle-orm/mysql2'
-import mysql from 'mysql2/promise'
+import { describe, it, expect, afterAll, afterEach } from '@jest/globals'
+import { schema, getDbConnection } from '@tn/db-helper'
 import { Context } from '../../src/context/context'
 import queries from '../../src/resolvers/queries'
-import { schema } from '@tn/db-helper'
-import { getTestDb } from '../mocks/test-db'
 import { cardFixture } from '../mocks/fixtures'
 import {
   QueryGetAllCardsArgs,
   QueryGetCardArgs,
 } from '../../src/__generated__/resolvers-types'
 
+const { orm, poolConnection } = getDbConnection()
+
 describe('Query Resolvers', () => {
   // Arrange
-  let orm: MySql2Database<typeof schema>
-  let pool: mysql.Pool
-
-  beforeAll(async () => {
-    const testDb = getTestDb()
-    orm = testDb.orm
-    pool = testDb.poolConnection
-  })
-
   afterAll(async () => {
-    pool.end()
+    poolConnection.end()
   })
 
   describe('GetCard', () => {
@@ -46,7 +37,11 @@ describe('Query Resolvers', () => {
       const res = await queries.getCard(parent, args, context)
 
       // Assert
-      expect(res).toMatchObject(cardFixture)
+      expect(res).toMatchObject({
+        name: cardFixture.name,
+        value: cardFixture.value,
+        isShiny: cardFixture.shiny,
+      })
     })
   })
 
@@ -76,7 +71,11 @@ describe('Query Resolvers', () => {
 
       // Assert
       expect(res.paginatedData).toHaveLength(numCards - perPage)
-      expect(res.paginatedData[0]).toMatchObject(cardFixture)
+      expect(res.paginatedData[0]).toMatchObject({
+        name: cardFixture.name,
+        value: cardFixture.value,
+        isShiny: cardFixture.shiny,
+      })
     })
   })
 
@@ -102,6 +101,10 @@ describe('Query Resolvers', () => {
 
     // Assert
     expect(res.paginatedData).toHaveLength(numCards - perPage)
-    expect(res.paginatedData[0]).toMatchObject(cardFixture)
+    expect(res.paginatedData[0]).toMatchObject({
+      name: cardFixture.name,
+      value: cardFixture.value,
+      isShiny: cardFixture.shiny,
+    })
   })
 })
