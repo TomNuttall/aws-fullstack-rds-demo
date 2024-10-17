@@ -18,5 +18,4 @@ type Query {
 
 type Mutation {
   favouriteCard(cardId: Int!): [Card]
-  unfavouriteCard(cardId: Int!): [Card]
 }

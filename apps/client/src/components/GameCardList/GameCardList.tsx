@@ -8,15 +8,13 @@ interface GameCardListProps {
 
 const GameCardList: React.FC<GameCardListProps> = ({ cardsData }) => {
   return (
-    <>
-      <ul className="flex flex-row flex-wrap gap-4 justify-center">
-        {cardsData?.map((cardData: CardType) => (
-          <li key={cardData?.id}>
-            <GameCard data={cardData} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul className="flex flex-row flex-wrap gap-4 justify-center">
+      {cardsData?.map((cardData: CardType) => (
+        <li key={cardData?.id}>
+          <GameCard data={cardData} />
+        </li>
+      ))}
+    </ul>
   )
 }
 
