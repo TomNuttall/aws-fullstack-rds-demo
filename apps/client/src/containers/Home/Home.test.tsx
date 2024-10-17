@@ -18,7 +18,15 @@ describe('Home', () => {
       result: {
         data: {
           getAllCards: {
-            paginatedData: [{ id: 1, value: 5 }],
+            paginatedData: [
+              {
+                id: 1,
+                name: 'Card Name',
+                value: 5,
+                isShiny: true,
+                isFavourite: true,
+              },
+            ],
             paginatedTotal: 1,
           },
         },
