@@ -1,24 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { HeartFilledIcon, HeartIcon } from '@radix-ui/react-icons'
-import { useMutation } from '@apollo/client'
 import { Button } from '../ui/button'
 import { Card, Maybe } from '../../__generated__/graphql'
 
-import { FAVOURITE_CARD } from '../../graphql/mutations'
-
 interface GameCardProps {
   data: Maybe<Card>
+  onFavouriteCard: (id?: Maybe<number>) => Promise<void>
 }
 
-const GameCard: React.FC<GameCardProps> = ({ data }) => {
-  const [favouriteCard] = useMutation(FAVOURITE_CARD)
-
-  const onFavourite = (id: number | undefined) => {
-    if (!id) return
-
-    favouriteCard({ variables: { cardId: id } })
-  }
-
+const GameCard: React.FC<GameCardProps> = ({ data, onFavouriteCard }) => {
   return (
     <div className="max-w-sm p-4 bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
       <div className="mb-1 text-xl font-medium text-gray-900 dark:text-white">
@@ -30,7 +20,7 @@ const GameCard: React.FC<GameCardProps> = ({ data }) => {
       </div>
 
       <div className="flex items-center justify-between">
-        <Button variant="outline" onClick={() => onFavourite(data?.id)}>
+        <Button variant="outline" onClick={() => onFavouriteCard(data?.id)}>
           {data?.isFavourite ? (
             <HeartFilledIcon color="#E11D48" />
           ) : (

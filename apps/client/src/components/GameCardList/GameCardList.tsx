@@ -1,19 +1,24 @@
 import React from 'react'
-import { Card as CardType, Maybe } from '../../__generated__/graphql'
+import { Card, Maybe } from '../../__generated__/graphql'
 import GameCard from '../GameCard'
 
 interface GameCardListProps {
-  cardsData?: Maybe<CardType[]>
+  cardsData?: Maybe<Maybe<Card>[]>
+  onFavouriteCard: (id?: Maybe<number>) => Promise<void>
 }
 
-const GameCardList: React.FC<GameCardListProps> = ({ cardsData }) => {
+const GameCardList: React.FC<GameCardListProps> = ({
+  cardsData,
+  onFavouriteCard,
+}) => {
   return (
     <ul className="flex flex-row flex-wrap gap-4 justify-center">
-      {cardsData?.map((cardData: CardType) => (
-        <li key={cardData?.id}>
-          <GameCard data={cardData} />
-        </li>
-      ))}
+      {cardsData &&
+        cardsData?.map((cardData: Maybe<Card>) => (
+          <li key={cardData?.id}>
+            <GameCard data={cardData} onFavouriteCard={onFavouriteCard} />
+          </li>
+        ))}
     </ul>
   )
 }
