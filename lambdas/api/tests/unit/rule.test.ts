@@ -1,6 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from 'vitest'
 import { isAuthenticated } from '../../src/permissions/rules'
-import { shield, allow } from 'graphql-shield'
+import { shield } from 'graphql-shield'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 import { applyMiddleware } from 'graphql-middleware'
 import { ApolloServer } from '@apollo/server'
