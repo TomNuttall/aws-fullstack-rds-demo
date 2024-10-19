@@ -5,7 +5,7 @@ import { Card, Maybe } from '../../__generated__/graphql'
 
 interface GameCardProps {
   data: Maybe<Card>
-  onFavouriteCard: (id?: Maybe<number>) => Promise<void>
+  onFavouriteCard: (favourite: boolean, id?: number) => Promise<void>
 }
 
 const GameCard: React.FC<GameCardProps> = ({ data, onFavouriteCard }) => {
@@ -20,7 +20,12 @@ const GameCard: React.FC<GameCardProps> = ({ data, onFavouriteCard }) => {
       </div>
 
       <div className="flex items-center justify-between">
-        <Button variant="outline" onClick={() => onFavouriteCard(data?.id)}>
+        <Button
+          variant="outline"
+          onClick={() =>
+            onFavouriteCard(data?.isFavourite || false, data?.id || undefined)
+          }
+        >
           {data?.isFavourite ? (
             <HeartFilledIcon color="#E11D48" />
           ) : (

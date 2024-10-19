@@ -5,15 +5,7 @@ import { transformCard } from '../transformers/transformCard'
 
 const mutations: MutationResolvers = {
   favouriteCard: async (_, { cardId }, { orm, userId }) => {
-    try {
-      await orm
-        .insert(schema.cardToUser)
-        .values({ cardId: cardId, userId: userId })
-    } catch (e) {
-      console.error(e)
-    }
-
-    const rows = await orm
+    let rows = await orm
       .select()
       .from(schema.cardsView)
       .where(
@@ -24,6 +16,24 @@ const mutations: MutationResolvers = {
           eq(schema.cardsView.userId, userId),
         ),
       )
+
+    if (rows.length === 0) {
+      await orm
+        .insert(schema.cardToUser)
+        .values({ cardId: cardId, userId: userId })
+
+      rows = await orm
+        .select()
+        .from(schema.cardsView)
+        .where(
+          and(
+            // @ts-ignore
+            eq(schema.cardsView.id, cardId),
+            // @ts-ignore
+            eq(schema.cardsView.userId, userId),
+          ),
+        )
+    }
 
     const [card] = transformCard(rows)
     return card
@@ -42,6 +52,8 @@ const mutations: MutationResolvers = {
         ),
       )
 
+    if (rows.length === 0) return null
+
     await orm.delete(schema.cardToUser).where(
       and(
         // @ts-ignore
@@ -52,6 +64,7 @@ const mutations: MutationResolvers = {
     )
 
     const [card] = transformCard(rows)
+    card.isFavourite = false
     return card
   },
 }

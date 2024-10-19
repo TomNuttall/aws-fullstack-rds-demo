@@ -11,3 +11,15 @@ export const FAVOURITE_CARD = gql(`
     }
   }
 `)
+
+export const UNFAVOURITE_CARD = gql(`
+  mutation UnfavouriteCard($cardId: Int!) {
+    unfavouriteCard(cardId: $cardId) {
+      id
+      name
+      value
+      isShiny
+      isFavourite
+    }
+  }
+`)

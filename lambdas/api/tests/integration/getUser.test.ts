@@ -1,4 +1,4 @@
-import { describe, it, expect, afterAll, afterEach } from '@jest/globals'
+import { describe, it, expect, afterAll, afterEach } from 'vitest'
 import { schema, getDbConnection } from '@tn/db-helper'
 import { userFixture } from '../mocks/fixtures'
 import { getUser } from '../../src/context/utils/getUser'

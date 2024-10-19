@@ -4,6 +4,6 @@ import { Context } from '../context/context'
 
 export const isAuthenticated: IRule = rule({
   cache: 'contextual',
-})(async (parent, args, context: Context, info) => {
+})(async (_, __, context: Context) => {
   return context.isLoggedIn
 })

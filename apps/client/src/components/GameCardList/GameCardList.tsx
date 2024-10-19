@@ -4,7 +4,7 @@ import GameCard from '../GameCard'
 
 interface GameCardListProps {
   cardsData?: Maybe<Maybe<Card>[]>
-  onFavouriteCard: (id?: Maybe<number>) => Promise<void>
+  onFavouriteCard: (favourite: boolean, id?: number) => Promise<void>
 }
 
 const GameCardList: React.FC<GameCardListProps> = ({

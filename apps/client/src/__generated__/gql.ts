@@ -14,6 +14,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 const documents = {
     "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.FavouriteCardDocument,
+    "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.UnfavouriteCardDocument,
     "\n  query GetCard($cardId: Int!) {\n    getCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n": types.GetCardDocument,
     "\n  query GetAllCards($pageNo: Int!, $perPage: Int!, $filter: String) {\n    getAllCards(pageNo: $pageNo, perPage: $perPage, filter: $filter) {\n      paginatedData {\n        id\n        name\n        value\n        isShiny\n        isFavourite\n      }\n      paginatedTotal\n    }\n  }\n": types.GetAllCardsDocument,
 };
@@ -36,6 +37,10 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"): (typeof documents)["\n  mutation FavouriteCard($cardId: Int!) {\n    favouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"): (typeof documents)["\n  mutation UnfavouriteCard($cardId: Int!) {\n    unfavouriteCard(cardId: $cardId) {\n      id\n      name\n      value\n      isShiny\n      isFavourite\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

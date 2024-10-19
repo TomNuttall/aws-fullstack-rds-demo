@@ -8,7 +8,8 @@ describe('GameCardList', () => {
   it('renders component', async () => {
     // Arrange
     const cardData: Card[] = [
-      { id: 1, name: '', value: 5, isShiny: true, isFavourite: true },
+      { id: 1, name: 'Card 1', value: 5, isShiny: true, isFavourite: true },
+      { id: 2, name: 'Card 2', value: 10, isShiny: true, isFavourite: true },
     ]
     const onFavouriteCard = vi.fn()
 
@@ -18,6 +19,6 @@ describe('GameCardList', () => {
     )
 
     // Assert
-    expect(await screen.findAllByRole('listitem')).toHaveLength(1)
+    expect(await screen.findAllByRole('listitem')).toHaveLength(2)
   })
 })
