@@ -1,0 +1,22 @@
+{
+  "name": "migrations",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "pkgroll",
+    "migrate": "yarn tsx --env-file=../../.env index.ts",
+    "migrate:test": "yarn tsx --env-file=../../.env.test.local index.ts"
+  },
+  "dependencies": {
+    "@tn/db-helper": "file:./../../packages/db-helper"
+  },
+  "devDependencies": {
+    "pkgroll": "^2.5.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.6.3"
+  }
+}

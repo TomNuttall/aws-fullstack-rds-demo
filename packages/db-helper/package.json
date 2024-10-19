@@ -12,8 +12,6 @@
     "build": "pkgroll",
     "generate": "yarn drizzle-kit generate",
     "generate:new": "yarn generate --custom",
-    "migrate:local": "yarn tsx --env-file=../../.env utils/migrate.ts utils/drizzle.config.ts",
-    "migrate:local:testing": "yarn tsx --env-file=../../.env.test.local utils/migrate.ts utils/drizzle.config.ts",
     "studio": "yarn --env-file=../../.env drizzle-kit studio",
     "studio:testing": "yarn --env-file=../../.env.test.local drizzle-kit studio",
     "dev": "yarn tsx --env-file=../../.env utils/example.ts"
