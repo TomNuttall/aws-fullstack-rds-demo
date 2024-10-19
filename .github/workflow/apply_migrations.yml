@@ -1,0 +1,23 @@
+name: Apply Migrations
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-frontend:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_MIGRATIONS_ROLE }}
+          role-duration-seconds: 900
+          aws-region: eu-west-2
+
+      - name: Invoke Lambda
+        run: aws lambda invoke --function-name ${{ secrets.AWS_MIGRATIONS_LAMBDA }}
