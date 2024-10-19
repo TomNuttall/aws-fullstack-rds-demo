@@ -7,7 +7,8 @@
     "dev:api": "cd lambdas/api && yarn dev",
     "dev:app": "cd apps/client && yarn dev",
     "db:start": "cd docker && docker compose up -d",
-    "db:migrate": "cd lambda/api && yarn run",
+    "db:migrate": "cd lambda/migrations && yarn migrate",
+    "db:migrate:test": "cd lambda/migrations && yarn migrate:test",
     "db:stop": "cd docker && docker compose down"
   }
 }
