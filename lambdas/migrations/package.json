@@ -8,15 +8,18 @@
   "license": "MIT",
   "scripts": {
     "build": "pkgroll",
-    "migrate": "yarn tsx --env-file=../../.env index.ts",
-    "migrate:test": "yarn tsx --env-file=../../.env.test.local index.ts"
+    "migrate": "tsx --env-file=../../.env -e 'require(\"./index.ts\").handler()'",
+    "migrate:test": "tsx --env-file=../../.env.test.local -e 'require(\"./index.ts\").handler()'"
   },
   "dependencies": {
     "@tn/db-helper": "file:./../../packages/db-helper"
   },
   "devDependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.675.0",
+    "aws-sdk-client-mock": "^4.1.0",
     "pkgroll": "^2.5.0",
     "tsx": "^4.19.1",
-    "typescript": "^5.6.3"
+    "typescript": "^5.6.3",
+    "vitest": "^2.1.3"
   }
 }

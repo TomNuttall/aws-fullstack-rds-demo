@@ -6,7 +6,7 @@ export interface dbConnection {
   poolConnection: mysql.Pool
 }
 
-const defaultConfig = {
+export const defaultConfig = {
   host: process.env.MYSQL_HOST,
   port: Number(process.env.MYSQL_PORT),
   user: process.env.MYSQL_USER,

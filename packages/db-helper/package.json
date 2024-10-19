@@ -10,11 +10,10 @@
   ],
   "scripts": {
     "build": "pkgroll",
-    "generate": "yarn drizzle-kit generate",
-    "generate:new": "yarn generate --custom",
+    "generate": "drizzle-kit generate",
+    "generate:new": "generate --custom",
     "studio": "yarn --env-file=../../.env drizzle-kit studio",
-    "studio:testing": "yarn --env-file=../../.env.test.local drizzle-kit studio",
-    "dev": "yarn tsx --env-file=../../.env utils/example.ts"
+    "studio:testing": "yarn --env-file=../../.env.test.local drizzle-kit studio"
   },
   "dependencies": {
     "drizzle-orm": "^0.34.1",
@@ -23,7 +22,6 @@
   "devDependencies": {
     "@tsconfig/node-lts": "^20.1.3",
     "@types/node": "^20.14.11",
-    "dotenv": "^16.4.5",
     "drizzle-kit": "^0.25.0",
     "pkgroll": "^2.5.0",
     "tsx": "^4.19.1",
