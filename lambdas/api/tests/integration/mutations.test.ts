@@ -1,4 +1,4 @@
-import { describe, it, expect, afterAll, afterEach } from '@jest/globals'
+import { describe, it, expect, afterAll, afterEach } from 'vitest'
 import { schema, getDbConnection } from '@tn/db-helper'
 import { Context } from '../../src/context/context'
 import mutations from '../../src/resolvers/mutations'
@@ -82,7 +82,7 @@ describe('Query Resolvers', () => {
         name: cardFixture.name,
         value: cardFixture.value,
         isShiny: cardFixture.shiny,
-        isFavourite: true,
+        isFavourite: false,
       })
     })
   })

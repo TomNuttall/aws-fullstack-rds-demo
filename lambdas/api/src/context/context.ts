@@ -1,7 +1,5 @@
-import { eq } from 'drizzle-orm'
-import { MySql2Database } from 'drizzle-orm/mysql2'
 import { createClerkClient } from '@clerk/backend'
-import { getDbConnection, schema } from '@tn/db-helper'
+import { getDbConnection } from '@tn/db-helper'
 import { getUser } from './utils/getUser'
 
 const { orm } = getDbConnection()

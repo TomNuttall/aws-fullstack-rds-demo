@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 
 import { GET_ALL_CARDS } from '../../graphql/queries'
+import { FAVOURITE_CARD, UNFAVOURITE_CARD } from '../../graphql/mutations'
+
 import GameCardList from '../../components/GameCardList'
 import Pagination from '../../components/Pagination'
 
@@ -14,19 +16,35 @@ const Home: React.FC = () => {
     variables: { pageNo, perPage: PER_PAGE },
   })
 
+  const [favouriteCard] = useMutation(FAVOURITE_CARD)
+  const [unfavouriteCard] = useMutation(UNFAVOURITE_CARD)
+
   useEffect(() => {
     fetchMore({ variables: { pageNo, perPage: PER_PAGE } })
   }, [pageNo])
 
+  const onFavouriteCard = async (favourite: boolean, id?: number) => {
+    if (id) {
+      if (favourite) {
+        favouriteCard({ variables: { cardId: id } })
+      } else {
+        unfavouriteCard({ variables: { cardId: id } })
+      }
+    }
+  }
+
   const cardsData = data?.getAllCards?.paginatedData
-  const totalResults = data?.getAllCards?.paginatedTotal ?? 0
+  const totalResults = data?.getAllCards?.paginatedTotal || 0
 
   return (
     <div className="container" data-testid="home">
       <h1 className="h1 pb-6">Home</h1>
       {cardsData && (
         <>
-          <GameCardList cardsData={cardsData} />
+          <GameCardList
+            cardsData={cardsData}
+            onFavouriteCard={onFavouriteCard}
+          />
 
           <Pagination
             pageNo={pageNo}
